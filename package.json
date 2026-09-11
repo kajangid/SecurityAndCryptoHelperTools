@@ -1,0 +1,117 @@
+{
+  "name": "@omnidev-tools/crypto-security-tools",
+  "version": "1.0.0",
+  "description": "Secure, reusable utilities for password analysis, cryptographic operations, secret generation, and security-focused application helpers.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./password-strength": {
+      "types": "./dist/password-strength/index.d.ts",
+      "import": "./dist/password-strength/index.mjs",
+      "require": "./dist/password-strength/index.cjs"
+    },
+    "./hash": {
+      "types": "./dist/hash/index.d.ts",
+      "import": "./dist/hash/index.mjs",
+      "require": "./dist/hash/index.cjs"
+    },
+    "./token-generator": {
+      "types": "./dist/token-generator/index.d.ts",
+      "import": "./dist/token-generator/index.mjs",
+      "require": "./dist/token-generator/index.cjs"
+    },
+    "./api-key-generator": {
+      "types": "./dist/api-key-generator/index.d.ts",
+      "import": "./dist/api-key-generator/index.mjs",
+      "require": "./dist/api-key-generator/index.cjs"
+    },
+    "./secret-generator": {
+      "types": "./dist/secret-generator/index.d.ts",
+      "import": "./dist/secret-generator/index.mjs",
+      "require": "./dist/secret-generator/index.cjs"
+    },
+    "./crypto-utils": {
+      "types": "./dist/crypto-utils/index.d.ts",
+      "import": "./dist/crypto-utils/index.mjs",
+      "require": "./dist/crypto-utils/index.cjs"
+    },
+    "./link": {
+      "types": "./dist/link/index.d.ts",
+      "import": "./dist/link/index.mjs",
+      "require": "./dist/link/index.cjs"
+    },
+    "./version": {
+      "types": "./dist/version.d.ts",
+      "import": "./dist/version.mjs",
+      "require": "./dist/version.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "crypto-security-tools": "dist/bin/cli.cjs",
+    "crypto-tools": "dist/bin/cli.cjs",
+    "password-strength": "dist/bin/cli.cjs",
+    "hash-util": "dist/bin/cli.cjs",
+    "token-gen": "dist/bin/cli.cjs",
+    "api-key-gen": "dist/bin/cli.cjs",
+    "secret-gen": "dist/bin/cli.cjs",
+    "link-signer": "dist/bin/cli.cjs"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "bump:patch": "npm version patch",
+    "bump:minor": "npm version minor",
+    "bump:major": "npm version major",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build",
+    "publish:dry": "npm publish --dry-run"
+  },
+  "keywords": [
+    "security",
+    "crypto",
+    "cryptography",
+    "password-strength",
+    "hash",
+    "hmac",
+    "tokens",
+    "api-keys",
+    "secret-generator",
+    "signed-links",
+    "utilities",
+    "zero-dependencies"
+  ],
+  "author": "OmniDev Tools",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omnidev-tools/crypto-security-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/omnidev-tools/crypto-security-tools/issues"
+  },
+  "homepage": "https://github.com/omnidev-tools/crypto-security-tools#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "@vitest/coverage-v8": "^3.0.7",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
+  }
+}
