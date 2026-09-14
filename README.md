@@ -3,7 +3,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](tsconfig.json)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](package.json)
 [![Module](https://img.shields.io/badge/Module-ESM%20%7C%20CJS-orange.svg)]()
-[![CI Status](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/ci.yml/badge.svg)](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/ci.yml)
+[![CI](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/ci.yml/badge.svg)](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/ci.yml)
+[![Release](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/release.yml/badge.svg)](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/release.yml)
 [![NPM Version](https://img.shields.io/npm/v/@kjangid/security-tools.svg)](https://www.npmjs.com/package/@kjangid/security-tools)
 [![Tests](https://img.shields.io/badge/Tests-137%20passed-success.svg)](docs/TESTING.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -35,15 +36,15 @@ Target Environments: **Node.js (>= 18.0.0)**, **Modern Browsers**, **Deno**, **B
 
 ## Features Matrix
 
-| Tool                   | Module                                        | Description                                                      | CLI Command         |
-| :--------------------- | :-------------------------------------------- | :--------------------------------------------------------------- | :------------------ |
-| **Password Strength**  | `@kjangid/security-tools/password-strength`   | Entropy calculation, pattern detection, blacklist, crack times   | `password-strength` |
-| **Cryptographic Hash** | `@kjangid/security-tools/hash`                | SHA-256/384/512, SHA-1, MD5, and HMAC digests (sync & async)     | `hash`              |
-| **Token Generator**    | `@kjangid/security-tools/token-generator`     | Hex, Base64URL, Alphanumeric, OTP, UUID v4, and NanoID tokens    | `token`             |
-| **API Key Generator**  | `@kjangid/security-tools/api-key-generator`   | Prefixed keys with embedded CRC32 integrity checksums & masking  | `api-key`           |
-| **Secret Generator**   | `@kjangid/security-tools/secret-generator`    | High-entropy raw secrets & Diceware passphrases (2048 words)     | `secret`            |
-| **Crypto Utils**       | `@kjangid/security-tools/crypto-utils`        | Unbiased integers, Fisher-Yates shuffle, constant-time compare   | `crypto-tools`      |
-| **Signed Links**       | `@kjangid/security-tools/link`                | HMAC-signed URLs, tamper detection, expiration & clock tolerance | `link`              |
+| Tool                   | Module                                      | Description                                                      | CLI Command         |
+| :--------------------- | :------------------------------------------ | :--------------------------------------------------------------- | :------------------ |
+| **Password Strength**  | `@kjangid/security-tools/password-strength` | Entropy calculation, pattern detection, blacklist, crack times   | `password-strength` |
+| **Cryptographic Hash** | `@kjangid/security-tools/hash`              | SHA-256/384/512, SHA-1, MD5, and HMAC digests (sync & async)     | `hash`              |
+| **Token Generator**    | `@kjangid/security-tools/token-generator`   | Hex, Base64URL, Alphanumeric, OTP, UUID v4, and NanoID tokens    | `token`             |
+| **API Key Generator**  | `@kjangid/security-tools/api-key-generator` | Prefixed keys with embedded CRC32 integrity checksums & masking  | `api-key`           |
+| **Secret Generator**   | `@kjangid/security-tools/secret-generator`  | High-entropy raw secrets & Diceware passphrases (2048 words)     | `secret`            |
+| **Crypto Utils**       | `@kjangid/security-tools/crypto-utils`      | Unbiased integers, Fisher-Yates shuffle, constant-time compare   | `crypto-tools`      |
+| **Signed Links**       | `@kjangid/security-tools/link`              | HMAC-signed URLs, tamper detection, expiration & clock tolerance | `link`              |
 
 ---
 
@@ -76,21 +77,16 @@ npm install -g @kjangid/security-tools
 ### Root Import
 
 ```typescript
-import {
-  analyzePassword,
-  generateApiKey,
-  generateSignedLink,
-  VERSION
-} from '@kjangid/security-tools';
+import { analyzePassword, generateApiKey, generateSignedLink, VERSION } from "@kjangid/security-tools";
 
 console.log(`Using Security Toolkit v${VERSION}`);
 
 // 1. Analyze a password
-const strength = analyzePassword('CorrectHorseBatteryStaple!2026');
+const strength = analyzePassword("CorrectHorseBatteryStaple!2026");
 console.log(strength.scoreLabel); // 'very_strong'
 
 // 2. Generate a prefixed API key with checksum
-const apiKey = generateApiKey({ prefix: 'sk_live' });
+const apiKey = generateApiKey({ prefix: "sk_live" });
 console.log(apiKey.key); // 'sk_live_xK9..._c8a41f'
 ```
 
@@ -99,14 +95,14 @@ console.log(apiKey.key); // 'sk_live_xK9..._c8a41f'
 The package configures `"sideEffects": false` and granular subpaths for zero-overhead tree shaking:
 
 ```typescript
-import { analyzePassword } from '@kjangid/security-tools/password-strength';
-import { hash, hmac } from '@kjangid/security-tools/hash';
-import { generateUuid, generateToken } from '@kjangid/security-tools/token-generator';
-import { generateApiKey, verifyApiKey, maskApiKey } from '@kjangid/security-tools/api-key-generator';
-import { generateSecret, generatePassphrase } from '@kjangid/security-tools/secret-generator';
-import { getRandomBytes, randomInt, timingSafeEqual } from '@kjangid/security-tools/crypto-utils';
-import { generateSignedLink, verifySignedLink } from '@kjangid/security-tools/link';
-import { VERSION } from '@kjangid/security-tools/version';
+import { analyzePassword } from "@kjangid/security-tools/password-strength";
+import { hash, hmac } from "@kjangid/security-tools/hash";
+import { generateUuid, generateToken } from "@kjangid/security-tools/token-generator";
+import { generateApiKey, verifyApiKey, maskApiKey } from "@kjangid/security-tools/api-key-generator";
+import { generateSecret, generatePassphrase } from "@kjangid/security-tools/secret-generator";
+import { getRandomBytes, randomInt, timingSafeEqual } from "@kjangid/security-tools/crypto-utils";
+import { generateSignedLink, verifySignedLink } from "@kjangid/security-tools/link";
+import { VERSION } from "@kjangid/security-tools/version";
 ```
 
 ---
@@ -118,20 +114,20 @@ import { VERSION } from '@kjangid/security-tools/version';
 Analyzes password complexity, detects dictionary words, sequences, keyboard patterns, calculates Shannon entropy, and estimates crack time.
 
 ```typescript
-import { analyzePassword } from '@kjangid/security-tools/password-strength';
+import { analyzePassword } from "@kjangid/security-tools/password-strength";
 
-const result = analyzePassword('P@ssw0rd123!', {
+const result = analyzePassword("P@ssw0rd123!", {
   minScore: 3,
   minLength: 10,
-  userInputs: ['mycompany', 'john']
+  userInputs: ["mycompany", "john"],
 });
 
-console.log(result.score);       // 0 - 4
-console.log(result.scoreLabel);  // 'very_weak' | 'weak' | 'fair' | 'strong' | 'very_strong'
-console.log(result.entropy);     // Entropy in bits (e.g. 74.2)
-console.log(result.crackTimes);  // { onlineThrottled, onlineUnthrottled, offlineSlowHash, offlineFastHash }
-console.log(result.feedback);    // { warnings: [...], recommendations: [...] }
-console.log(result.isValid);     // true/false based on minScore and minLength
+console.log(result.score); // 0 - 4
+console.log(result.scoreLabel); // 'very_weak' | 'weak' | 'fair' | 'strong' | 'very_strong'
+console.log(result.entropy); // Entropy in bits (e.g. 74.2)
+console.log(result.crackTimes); // { onlineThrottled, onlineUnthrottled, offlineSlowHash, offlineFastHash }
+console.log(result.feedback); // { warnings: [...], recommendations: [...] }
+console.log(result.isValid); // true/false based on minScore and minLength
 ```
 
 ### 2. Cryptographic Hashing & HMAC
@@ -139,25 +135,19 @@ console.log(result.isValid);     // true/false based on minScore and minLength
 Universal hashing and message authentication supporting SHA-256, SHA-384, SHA-512, SHA-1, and MD5.
 
 ```typescript
-import {
-  hash,
-  hashAsync,
-  hmac,
-  hmacAsync,
-  verifyHmac
-} from '@kjangid/security-tools/hash';
+import { hash, hashAsync, hmac, hmacAsync, verifyHmac } from "@kjangid/security-tools/hash";
 
 // Synchronous SHA-256 hash (hex, base64, base64url, or binary)
-const digest = hash('secret data', 'SHA-256', 'hex');
+const digest = hash("secret data", "SHA-256", "hex");
 
 // Asynchronous Web Crypto API digest
-const asyncDigest = await hashAsync('secret data', 'SHA-256', 'base64url');
+const asyncDigest = await hashAsync("secret data", "SHA-256", "base64url");
 
 // Synchronous HMAC-SHA256
-const mac = hmac('secret-key', 'data payload', 'SHA-256', 'hex');
+const mac = hmac("secret-key", "data payload", "SHA-256", "hex");
 
 // Constant-time HMAC verification
-const isValid = verifyHmac('secret-key', 'data payload', mac as string);
+const isValid = verifyHmac("secret-key", "data payload", mac as string);
 ```
 
 ### 3. Token Generator
@@ -173,15 +163,15 @@ import {
   generateBase64UrlToken,
   generateUuid,
   generateNanoId,
-  generateCustomToken
-} from '@kjangid/security-tools/token-generator';
+  generateCustomToken,
+} from "@kjangid/security-tools/token-generator";
 
 const alpha = generateAlphanumericToken(32); // 32 chars [A-Za-z0-9]
-const otp = generateNumericToken(6);         // 6-digit PIN e.g. "829410"
-const uuid = generateUuid();                 // RFC 4122 v4 UUID
-const nid = generateNanoId(21);              // 21-char URL-safe NanoID
-const hex = generateHexToken(16);            // 32-char hex token (16 bytes)
-const custom = generateCustomToken(10, 'ABCDEF012345');
+const otp = generateNumericToken(6); // 6-digit PIN e.g. "829410"
+const uuid = generateUuid(); // RFC 4122 v4 UUID
+const nid = generateNanoId(21); // 21-char URL-safe NanoID
+const hex = generateHexToken(16); // 32-char hex token (16 bytes)
+const custom = generateCustomToken(10, "ABCDEF012345");
 ```
 
 ### 4. API Key Generator
@@ -189,24 +179,19 @@ const custom = generateCustomToken(10, 'ABCDEF012345');
 Generates high-entropy prefixed keys with offline CRC32 integrity checksums and secure masking.
 
 ```typescript
-import {
-  generateApiKey,
-  verifyApiKey,
-  parseApiKey,
-  maskApiKey
-} from '@kjangid/security-tools/api-key-generator';
+import { generateApiKey, verifyApiKey, parseApiKey, maskApiKey } from "@kjangid/security-tools/api-key-generator";
 
 // 1. Generate key: <prefix>_<secret>_<checksum>
 const { key, prefix, secret, checksum } = generateApiKey({
-  prefix: 'sk_live',
-  byteLength: 24
+  prefix: "sk_live",
+  byteLength: 24,
 });
 // Result: 'sk_live_xY7..._c8a41f'
 
 // 2. Offline verification without hitting the database
-const verification = verifyApiKey(key, { prefix: 'sk_live' });
+const verification = verifyApiKey(key, { prefix: "sk_live" });
 if (verification.valid) {
-  console.log('Key is structurally valid and untampered!');
+  console.log("Key is structurally valid and untampered!");
 }
 
 // 3. Mask for audit logs and UI
@@ -218,21 +203,17 @@ console.log(maskApiKey(key)); // 'sk_live••••••••a41f'
 Generates high-entropy configuration secrets and Diceware passphrases from a curated 2048-word EFF list.
 
 ```typescript
-import {
-  generateSecret,
-  generatePassphrase,
-  estimateSecretEntropy
-} from '@kjangid/security-tools/secret-generator';
+import { generateSecret, generatePassphrase, estimateSecretEntropy } from "@kjangid/security-tools/secret-generator";
 
 // Raw 256-bit secret (hex, base64, base64url, or binary)
-const sec = generateSecret({ bits: 256, format: 'hex' });
+const sec = generateSecret({ bits: 256, format: "hex" });
 
 // 6-word Diceware Passphrase (66 bits entropy)
 const pass = generatePassphrase({
   words: 6,
-  separator: '-',
+  separator: "-",
   capitalize: true,
-  includeNumber: true
+  includeNumber: true,
 });
 // Result: 'Anxiety-Exact-Federal-Cupboard-Tortoise-Kitten-42'
 
@@ -254,8 +235,8 @@ import {
   shuffle,
   crc32,
   crc32Hex,
-  timingSafeEqual
-} from '@kjangid/security-tools/crypto-utils';
+  timingSafeEqual,
+} from "@kjangid/security-tools/crypto-utils";
 
 // Unbiased cryptographically random integer in [min, max] (no modulo bias)
 const diceRoll = randomInt(1, 6);
@@ -264,7 +245,7 @@ const diceRoll = randomInt(1, 6);
 const float = randomFloat();
 
 // Cryptographic Fisher-Yates shuffle
-const shuffled = shuffle(['A', 'B', 'C', 'D']);
+const shuffled = shuffle(["A", "B", "C", "D"]);
 
 // Constant-time comparison (prevents timing side-channel attacks)
 const equal = timingSafeEqual(secretA, secretB);
@@ -279,25 +260,25 @@ import {
   generateSignedLink,
   verifySignedLink,
   createPasswordResetLink,
-  createMagicLink
-} from '@kjangid/security-tools/link';
+  createMagicLink,
+} from "@kjangid/security-tools/link";
 
 // Generate signed link with 15-minute expiration
 const link = generateSignedLink({
-  baseUrl: 'https://app.com/auth/verify',
-  secret: 'app-signing-secret',
-  expiresIn: '15m',
-  params: { userId: 'usr_123', role: 'admin' }
+  baseUrl: "https://app.com/auth/verify",
+  secret: "app-signing-secret",
+  expiresIn: "15m",
+  params: { userId: "usr_123", role: "admin" },
 });
 
 // Verify link
-const result = verifySignedLink(link.url, 'app-signing-secret');
+const result = verifySignedLink(link.url, "app-signing-secret");
 if (result.valid) {
-  console.log('User ID:', result.params.userId);
+  console.log("User ID:", result.params.userId);
 } else if (result.expired) {
-  console.log('Link expired at:', result.expiresAt);
+  console.log("Link expired at:", result.expiresAt);
 } else if (result.tampered) {
-  console.log('Link signature or query parameter was tampered with!');
+  console.log("Link signature or query parameter was tampered with!");
 }
 ```
 
@@ -307,8 +288,8 @@ if (result.valid) {
 
 The toolkit provides a unified binary (`crypto-tools` or `crypto-security-tools`) and dedicated binary aliases:
 
-| Alias               | Command Equivalent              |
-| :------------------ | :------------------------------ |
+| Alias               | Command Equivalent               |
+| :------------------ | :------------------------------- |
 | `password-strength` | `crypto-tools password-strength` |
 | `hash-util`         | `crypto-tools hash`              |
 | `token-gen`         | `crypto-tools token`             |
@@ -383,6 +364,7 @@ GitHub Release (Automated release notes)
 
 1. **Bump Version Locally**:
    Run one of the following commands to update `package.json` and automatically generate a version commit and Git tag:
+
    ```bash
    npm version patch   # 1.0.0 -> 1.0.1 (bug fixes)
    npm version minor   # 1.0.0 -> 1.1.0 (backward-compatible features)
@@ -390,6 +372,7 @@ GitHub Release (Automated release notes)
    ```
 
 2. **Push Commit and Tag**:
+
    ```bash
    git push --follow-tags
    ```
@@ -412,7 +395,7 @@ To enable token-less publishing from GitHub Actions to npm:
    - **Organization or User**: `kajangid`
    - **Repository**: `SecurityAndCryptoHelperTools`
    - **Workflow filename**: `release.yml`
-   - **Environment name**: *(leave empty)*
+   - **Environment name**: _(leave empty)_
    - **Package Name**: `@kjangid/security-tools`
 5. Save the configuration. No `NPM_TOKEN` secret is required!
 
