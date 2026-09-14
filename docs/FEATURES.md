@@ -1,6 +1,6 @@
 # Features & API Reference Manual
 
-Exhaustive API documentation, TypeScript function signatures, option interfaces, and practical examples for all utilities in `@omnidev-tools/crypto-security-tools`.
+Exhaustive API documentation, TypeScript function signatures, option interfaces, and practical examples for all utilities in `@kjangid/security-tools`.
 
 ---
 
@@ -9,7 +9,7 @@ Exhaustive API documentation, TypeScript function signatures, option interfaces,
 `VERSION` is injected at build and test time from `package.json` (Single Source of Truth).
 
 ```typescript
-import { VERSION } from '@omnidev-tools/crypto-security-tools/version';
+import { VERSION } from '@kjangid/security-tools/version';
 
 console.log(VERSION); // '1.0.0'
 ```
@@ -72,7 +72,7 @@ export interface PasswordAnalysisResult {
 #### Example
 
 ```typescript
-import { analyzePassword } from '@omnidev-tools/crypto-security-tools/password-strength';
+import { analyzePassword } from '@kjangid/security-tools/password-strength';
 
 const result = analyzePassword('CorrectHorseBatteryStaple!2026', {
   minScore: 3,
@@ -106,7 +106,7 @@ console.log(`Crack time (GPU SHA-256): ${result.crackTimes.offlineFastHash}`);
 #### Example
 
 ```typescript
-import { hash, hmac, verifyHmac } from '@omnidev-tools/crypto-security-tools/hash';
+import { hash, hmac, verifyHmac } from '@kjangid/security-tools/hash';
 
 // Synchronous SHA-256 hex digest
 const fileHash = hash('document contents', 'SHA-256', 'hex');
@@ -142,7 +142,7 @@ import {
   generateToken,
   generateNumericToken,
   generateUuid
-} from '@omnidev-tools/crypto-security-tools/token-generator';
+} from '@kjangid/security-tools/token-generator';
 
 // 6-digit OTP code for 2FA SMS
 const otp = generateNumericToken(6);
@@ -183,7 +183,7 @@ import {
   generateApiKey,
   verifyApiKey,
   maskApiKey
-} from '@omnidev-tools/crypto-security-tools/api-key-generator';
+} from '@kjangid/security-tools/api-key-generator';
 
 // 1. Generate key
 const { key, prefix, checksum } = generateApiKey({ prefix: 'sk_live', byteLength: 32 });
@@ -215,7 +215,7 @@ console.log(maskApiKey(key)); // 'sk_live••••••••a41f'
 import {
   generateSecret,
   generatePassphrase
-} from '@omnidev-tools/crypto-security-tools/secret-generator';
+} from '@kjangid/security-tools/secret-generator';
 
 // Generate raw 256-bit AES encryption key
 const aesKey = generateSecret({ bits: 256, format: 'hex' });
@@ -269,7 +269,7 @@ console.log(masterPass.passphrase);
 import {
   createPasswordResetLink,
   verifySignedLink
-} from '@omnidev-tools/crypto-security-tools/link';
+} from '@kjangid/security-tools/link';
 
 const signingKey = 'org-signing-secret';
 

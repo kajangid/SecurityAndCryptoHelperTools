@@ -1,6 +1,6 @@
 # Operational Boundaries & Security Limitations
 
-While `@omnidev-tools/crypto-security-tools` is engineered for high reliability and defensive safety, engineers should understand its operational and cryptographic boundaries.
+While `@kjangid/security-tools` is engineered for high reliability and defensive safety, engineers should understand its operational and cryptographic boundaries.
 
 ---
 

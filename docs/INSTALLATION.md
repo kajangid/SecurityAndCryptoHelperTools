@@ -1,6 +1,6 @@
 # Installation & Setup Guide
 
-`@omnidev-tools/crypto-security-tools` supports all modern JavaScript and TypeScript environments with zero external dependencies.
+`@kjangid/security-tools` supports all modern JavaScript and TypeScript environments with zero external dependencies.
 
 ---
 
@@ -9,25 +9,25 @@
 ### NPM
 
 ```bash
-npm install @omnidev-tools/crypto-security-tools
+npm install @kjangid/security-tools
 ```
 
 ### PNPM
 
 ```bash
-pnpm add @omnidev-tools/crypto-security-tools
+pnpm add @kjangid/security-tools
 ```
 
 ### Yarn
 
 ```bash
-yarn add @omnidev-tools/crypto-security-tools
+yarn add @kjangid/security-tools
 ```
 
 ### Bun
 
 ```bash
-bun add @omnidev-tools/crypto-security-tools
+bun add @kjangid/security-tools
 ```
 
 ---
@@ -37,7 +37,7 @@ bun add @omnidev-tools/crypto-security-tools
 To install the CLI globally for terminal use:
 
 ```bash
-npm install -g @omnidev-tools/crypto-security-tools
+npm install -g @kjangid/security-tools
 ```
 
 Once installed, the unified command and all binary aliases are directly available in your shell:
@@ -70,7 +70,7 @@ import {
   generateApiKey,
   generateSignedLink,
   VERSION
-} from '@omnidev-tools/crypto-security-tools';
+} from '@kjangid/security-tools';
 ```
 
 ### 2. Subpath Imports (Tree-Shaking)
@@ -79,13 +79,13 @@ The package defines granular `"exports"` and `"sideEffects": false` in `package.
 
 ```typescript
 // Imports only the password analysis engine (~8 KB)
-import { analyzePassword } from '@omnidev-tools/crypto-security-tools/password-strength';
+import { analyzePassword } from '@kjangid/security-tools/password-strength';
 
 // Imports only the API key generator (~8 KB)
-import { generateApiKey, verifyApiKey } from '@omnidev-tools/crypto-security-tools/api-key-generator';
+import { generateApiKey, verifyApiKey } from '@kjangid/security-tools/api-key-generator';
 
 // Imports only crypto utilities
-import { getRandomBytes, randomInt } from '@omnidev-tools/crypto-security-tools/crypto-utils';
+import { getRandomBytes, randomInt } from '@kjangid/security-tools/crypto-utils';
 ```
 
 ---

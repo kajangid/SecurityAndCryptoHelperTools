@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Multi-command CLI executable and binary aliases for @omnidev-tools/crypto-security-tools.
+ * Multi-command CLI executable and binary aliases for @kjangid/security-tools.
  */
 
 import { basename } from 'node:path';
@@ -16,7 +16,7 @@ import { generateSignedLink, verifySignedLink } from '../link/index.js';
 import { HashAlgorithm, Encoding, TokenType, SecretFormat } from '../shared/types.js';
 
 const HELP_TEXT = `
-@omnidev-tools/crypto-security-tools v${VERSION}
+@kjangid/security-tools v${VERSION}
 
 Usage:
   crypto-tools <command> [options]

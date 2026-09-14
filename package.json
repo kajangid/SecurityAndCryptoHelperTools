@@ -1,12 +1,26 @@
 {
-  "name": "@omnidev-tools/crypto-security-tools",
+  "name": "@kjangid/security-tools",
   "version": "1.0.0",
   "description": "Secure, reusable utilities for password analysis, cryptographic operations, secret generation, and security-focused application helpers.",
+  "author": "Karan Jangid",
+  "license": "MIT",
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kajangid/SecurityAndCryptoHelperTools.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/kajangid/SecurityAndCryptoHelperTools/issues"
+  },
+  "homepage": "https://github.com/kajangid/SecurityAndCryptoHelperTools#readme",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -76,6 +90,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
     "bump:patch": "npm version patch",
     "bump:minor": "npm version minor",
     "bump:major": "npm version major",
@@ -96,16 +111,6 @@
     "utilities",
     "zero-dependencies"
   ],
-  "author": "OmniDev Tools",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/omnidev-tools/crypto-security-tools.git"
-  },
-  "bugs": {
-    "url": "https://github.com/omnidev-tools/crypto-security-tools/issues"
-  },
-  "homepage": "https://github.com/omnidev-tools/crypto-security-tools#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.13.9",

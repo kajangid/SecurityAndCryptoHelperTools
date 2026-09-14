@@ -1,6 +1,6 @@
 # System Architecture & Technical Design
 
-`@omnidev-tools/crypto-security-tools` is an enterprise-grade utility package and standalone CLI toolkit designed around three foundational principles:
+`@kjangid/security-tools` is an enterprise-grade utility package and standalone CLI toolkit designed around three foundational principles:
 1. **Zero Runtime Dependencies**: Every single tool is built from first principles with zero external dependencies.
 2. **Defensive Security by Default**: Built-in defenses against prototype pollution, timing side-channels, and parameter tampering.
 3. **Dual Module & Granular Subpaths**: Full tree-shaking support for ESM and CommonJS with TypeScript type declarations.
@@ -12,8 +12,8 @@
 ```mermaid
 flowchart TD
     subgraph Consumer Applications
-        APP_ROOT["import { ... } from '@omnidev-tools/crypto-security-tools'"]
-        APP_SUB["import { ... } from '@omnidev-tools/crypto-security-tools/password-strength'"]
+        APP_ROOT["import { ... } from '@kjangid/security-tools'"]
+        APP_SUB["import { ... } from '@kjangid/security-tools/password-strength'"]
         CLI_EXEC["CLI Terminal: crypto-tools <command>"]
     end
 

@@ -1,6 +1,6 @@
 # Deployment & Release Workflow
 
-This document outlines the release engineering lifecycle for `@omnidev-tools/crypto-security-tools`.
+This document outlines the release engineering lifecycle for `@kjangid/security-tools`.
 
 ---
 
@@ -10,7 +10,7 @@ This document outlines the release engineering lifecycle for `@omnidev-tools/cry
 
 ### Version Bumping Scripts
 
-Use the pre-configured npm scripts to increment semantic versions:
+Use the pre-configured npm scripts to increment semantic versions and automatically generate a version commit and Git tag:
 
 ```bash
 # Bug fixes and security patches (e.g. 1.0.0 -> 1.0.1)
@@ -63,64 +63,42 @@ Ensure only the intended files are packaged:
 
 ---
 
-## 4. GitHub Actions CI/CD Pipeline
+## 4. Production CI/CD Pipeline (GitHub Actions & OIDC)
 
-Create `.github/workflows/ci.yml` in your repository:
+The repository implements a two-stage CI/CD pipeline using **GitHub Actions** and **npm Trusted Publishing (OIDC)**:
 
-```yaml
-name: CI & Publish
+### 1. CI Workflow (`.github/workflows/ci.yml`)
+- **Triggers**: Pull requests and pushes targeting `main` and `master`.
+- **Jobs**:
+  - `npm ci`
+  - `npm run lint` (`tsc --noEmit`)
+  - `npm test`
+  - `npm run build`
 
-on:
-  push:
-    branches: [main]
-    tags: ['v*']
-  pull_request:
-    branches: [main]
+### 2. Release Workflow (`.github/workflows/release.yml`)
+- **Triggers**: Pushes of Git tags matching `v*` (e.g. `v1.0.1`).
+- **Permissions**:
+  - `contents: write` (for GitHub Releases)
+  - `id-token: write` (for npm OIDC provenance and trusted publishing)
+- **Jobs**:
+  - Checkouts the tagged commit
+  - Runs clean install, lint, test, and build
+  - Verifies that the Git tag version strictly matches the `package.json` version
+  - Publishes to npm via **OIDC Trusted Publishing** (`npm publish --provenance --access public`)
+  - Generates a GitHub Release with auto-generated release notes (`gh release create`)
 
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
+---
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+## 5. One-Time Setup: npm Trusted Publishing
 
-      - name: Install Dependencies
-        run: npm ci
+With npm Trusted Publishing, no long-lived `NPM_TOKEN` secret is needed in your GitHub repository.
 
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Run Test Suite & Coverage
-        run: npm run test:coverage
-
-      - name: Build Dual ESM/CJS & Types
-        run: npm run build
-
-  publish:
-    needs: validate
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Publish to NPM
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-```
+1. Log in to [npmjs.com](https://www.npmjs.com).
+2. Go to your package settings ➔ **Publishing Access** ➔ **Add a Trusted Publisher** ➔ **GitHub Actions** (or **Account Settings** ➔ **Publishing Access** for a new package).
+3. Configure the publisher:
+   - **GitHub Organization or User**: `kajangid`
+   - **Repository Name**: `SecurityAndCryptoHelperTools`
+   - **Workflow filename**: `release.yml`
+   - **Environment name**: *(leave empty)*
+   - **Package Name**: `@kjangid/security-tools`
+4. Click **Add Trusted Publisher**. Releases can now be published seamlessly and securely via Git tags!

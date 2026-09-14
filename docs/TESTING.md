@@ -1,6 +1,6 @@
 # Test Suite Matrix & Verification Strategy
 
-`@omnidev-tools/crypto-security-tools` maintains a strict 100% test coverage philosophy. Every single source file in `src/` has its own dedicated, isolated test suite in accordance with mandatory architectural requirements.
+`@kjangid/security-tools` maintains a strict 100% test coverage philosophy. Every single source file in `src/` has its own dedicated, isolated test suite in accordance with mandatory architectural requirements.
 
 ---
 

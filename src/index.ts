@@ -1,5 +1,5 @@
 /**
- * @omnidev-tools/crypto-security-tools
+ * @kjangid/security-tools
  *
  * Production-grade, zero-runtime-dependency TypeScript/Node.js utility package
  * and standalone CLI toolkit for password analysis, cryptographic operations,
