@@ -1,6 +1,6 @@
 {
   "name": "@kjangid/security-tools",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Secure, reusable utilities for password analysis, cryptographic operations, secret generation, and security-focused application helpers.",
   "author": "Karan Jangid",
   "license": "MIT",
