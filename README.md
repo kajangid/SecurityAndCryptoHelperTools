@@ -1,72 +1,41 @@
 # @kjangid/security-tools
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](tsconfig.json)
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](package.json)
-[![Module](https://img.shields.io/badge/Module-ESM%20%7C%20CJS-orange.svg)]()
-[![CI](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/ci.yml/badge.svg)](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/ci.yml)
-[![Release](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/release.yml/badge.svg)](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/release.yml)
 [![NPM Version](https://img.shields.io/npm/v/@kjangid/security-tools.svg)](https://www.npmjs.com/package/@kjangid/security-tools)
-[![Tests](https://img.shields.io/badge/Tests-137%20passed-success.svg)](docs/TESTING.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/Node-%3E%3D18.0.0-green.svg)](package.json)
-[![Coverage](https://img.shields.io/badge/coverage-100%25%20matrix-brightgreen.svg)](docs/TESTING.md)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](https://www.npmjs.com/package/@kjangid/security-tools?activeTab=dependencies)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/LICENSE)
+[![Tests](https://img.shields.io/badge/Tests-137%20passed-success.svg)](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/docs/TESTING.md)
+[![CI](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/ci.yml/badge.svg)](https://github.com/kajangid/SecurityAndCryptoHelperTools/actions/workflows/ci.yml)
+[![Node](https://img.shields.io/badge/Node-%3E%3D18.0.0-green.svg)](https://nodejs.org)
 
-Production-grade, zero-runtime-dependency TypeScript/Node.js utility package and standalone CLI toolkit for password analysis, cryptographic operations, secret generation, and security-focused application helpers.
+Zero-runtime-dependency TypeScript toolkit and multi-command CLI for password strength analysis, cryptographic operations, token/secret generation, and tamper-proof signed links.
 
-Target Environments: **Node.js (>= 18.0.0)**, **Modern Browsers**, **Deno**, **Bun**, and **Cloudflare Workers**.
-
----
-
-## Key Features
-
-- **Zero Runtime Dependencies**: Every single cryptographic and security utility is implemented from first principles with zero external runtime dependencies (`dependencies: {}`).
-- **Production-Grade Password Analysis**: Accurate Shannon entropy evaluation, detection of sequential characters, keyboard walk patterns (`qwerty`), repeated substrings, common dictionary blacklists, and realistic crack time estimates across 4 threat models.
-- **Universal Cryptographic Primitives**: High-performance SHA-family (`SHA-256`, `SHA-384`, `SHA-512`, `SHA-1`, `MD5`) hashing and HMAC digest generation with synchronous execution and asynchronous Web Crypto API parity.
-- **Cryptographically Secure Token Generation**: High-entropy token generators including UUID v4 (RFC 4122 compliant), NanoID collision-resistant IDs, 6-digit OTPs / PINs, hex, and base64url tokens using rejection sampling without modulo bias.
-- **Prefixed API Keys with Offline Checksums**: Stripe-style prefixed API keys (`sk_live_..._checksum`) featuring embedded CRC32 integrity verification, enabling instant offline corruption and typo detection without database overhead, plus audit log masking.
-- **High-Entropy Secrets & Diceware Passphrases**: Secure secret generator (64 to 8192 bits) and Diceware passphrase engine using an embedded 2048-word EFF wordlist (11 bits of entropy per word).
-- **Tamper-Proof Signed URLs**: URL signing with canonical query parameter sorting, HMAC-SHA256 signatures, expiration timestamps, and clock skew tolerance for password reset and magic link flows.
-- **Timing Side-Channel Protection**: Constant-time comparison (`timingSafeEqual`) to protect critical authentication checks against timing attacks.
-- **Prototype Pollution Defenses**: Built-in defenses (`safeRecord()`, `isSafeKey()`, `safeAssign()`) safeguarding against `__proto__`, `constructor`, and `prototype` injection attacks across all parsers and inputs.
-- **Standalone Multi-Command CLI**: Unified binary executable (`crypto-tools`) and dedicated binary aliases (`password-strength`, `hash-util`, `token-gen`, `api-key-gen`, `secret-gen`, `link-signer`) with full standard input piping support and standard exit codes.
-- **Dual ESM/CommonJS & Granular Subpath Exports**: Full support for root imports and subpath module imports with `"sideEffects": false` for optimal tree-shaking across Node.js (>= 18), Browsers, Deno, Bun, and Cloudflare Workers.
-- **Single Source of Truth Versioning**: Automatic build-time version injection from `package.json`, ensuring synchronization across compiled artifacts and `--version` CLI flags.
+Works seamlessly in **Node.js (>= 18)**, **Browsers**, **Deno**, **Bun**, and **Cloudflare Workers**.
 
 ---
 
-## Features Matrix
+## Highlights
 
-| Tool                   | Module                                      | Description                                                      | CLI Command         |
-| :--------------------- | :------------------------------------------ | :--------------------------------------------------------------- | :------------------ |
-| **Password Strength**  | `@kjangid/security-tools/password-strength` | Entropy calculation, pattern detection, blacklist, crack times   | `password-strength` |
-| **Cryptographic Hash** | `@kjangid/security-tools/hash`              | SHA-256/384/512, SHA-1, MD5, and HMAC digests (sync & async)     | `hash`              |
-| **Token Generator**    | `@kjangid/security-tools/token-generator`   | Hex, Base64URL, Alphanumeric, OTP, UUID v4, and NanoID tokens    | `token`             |
-| **API Key Generator**  | `@kjangid/security-tools/api-key-generator` | Prefixed keys with embedded CRC32 integrity checksums & masking  | `api-key`           |
-| **Secret Generator**   | `@kjangid/security-tools/secret-generator`  | High-entropy raw secrets & Diceware passphrases (2048 words)     | `secret`            |
-| **Crypto Utils**       | `@kjangid/security-tools/crypto-utils`      | Unbiased integers, Fisher-Yates shuffle, constant-time compare   | `crypto-tools`      |
-| **Signed Links**       | `@kjangid/security-tools/link`              | HMAC-signed URLs, tamper detection, expiration & clock tolerance | `link`              |
+- **Zero Dependencies**: Pure standard library and platform-native crypto primitives (`dependencies: {}`).
+- **Defensive by Default**: Built-in prototype pollution guards and constant-time string comparisons (`timingSafeEqual`).
+- **Offline Checksum API Keys**: Stripe-style prefixed keys (`sk_live_..._checksum`) with instant CRC32 integrity validation.
+- **Tree-Shakeable Subpaths**: Fully typed dual ESM/CJS bundles with `"sideEffects": false` — import only what you use.
+- **Standalone Multi-Command CLI**: Pre-configured unified binary `crypto-tools` with pipe support and dedicated command aliases.
 
 ---
 
 ## Installation
 
 ```bash
-# npm
 npm install @kjangid/security-tools
-
-# pnpm
-pnpm add @kjangid/security-tools
-
-# yarn
-yarn add @kjangid/security-tools
-
-# bun
-bun add @kjangid/security-tools
 ```
 
-To install the standalone CLI globally:
-
 ```bash
+# Alternative package managers
+pnpm add @kjangid/security-tools
+yarn add @kjangid/security-tools
+bun add @kjangid/security-tools
+
+# Global CLI installation
 npm install -g @kjangid/security-tools
 ```
 
@@ -74,364 +43,118 @@ npm install -g @kjangid/security-tools
 
 ## Quick Start
 
-### Root Import
-
-```typescript
-import { analyzePassword, generateApiKey, generateSignedLink, VERSION } from "@kjangid/security-tools";
-
-console.log(`Using Security Toolkit v${VERSION}`);
-
-// 1. Analyze a password
-const strength = analyzePassword("CorrectHorseBatteryStaple!2026");
-console.log(strength.scoreLabel); // 'very_strong'
-
-// 2. Generate a prefixed API key with checksum
-const apiKey = generateApiKey({ prefix: "sk_live" });
-console.log(apiKey.key); // 'sk_live_xK9..._c8a41f'
-```
-
-### Granular Subpath Imports (Tree-Shaking)
-
-The package configures `"sideEffects": false` and granular subpaths for zero-overhead tree shaking:
-
-```typescript
-import { analyzePassword } from "@kjangid/security-tools/password-strength";
-import { hash, hmac } from "@kjangid/security-tools/hash";
-import { generateUuid, generateToken } from "@kjangid/security-tools/token-generator";
-import { generateApiKey, verifyApiKey, maskApiKey } from "@kjangid/security-tools/api-key-generator";
-import { generateSecret, generatePassphrase } from "@kjangid/security-tools/secret-generator";
-import { getRandomBytes, randomInt, timingSafeEqual } from "@kjangid/security-tools/crypto-utils";
-import { generateSignedLink, verifySignedLink } from "@kjangid/security-tools/link";
-import { VERSION } from "@kjangid/security-tools/version";
-```
-
----
-
-## API Reference
-
-### 1. Password Strength Analysis
-
-Analyzes password complexity, detects dictionary words, sequences, keyboard patterns, calculates Shannon entropy, and estimates crack time.
-
-```typescript
-import { analyzePassword } from "@kjangid/security-tools/password-strength";
-
-const result = analyzePassword("P@ssw0rd123!", {
-  minScore: 3,
-  minLength: 10,
-  userInputs: ["mycompany", "john"],
-});
-
-console.log(result.score); // 0 - 4
-console.log(result.scoreLabel); // 'very_weak' | 'weak' | 'fair' | 'strong' | 'very_strong'
-console.log(result.entropy); // Entropy in bits (e.g. 74.2)
-console.log(result.crackTimes); // { onlineThrottled, onlineUnthrottled, offlineSlowHash, offlineFastHash }
-console.log(result.feedback); // { warnings: [...], recommendations: [...] }
-console.log(result.isValid); // true/false based on minScore and minLength
-```
-
-### 2. Cryptographic Hashing & HMAC
-
-Universal hashing and message authentication supporting SHA-256, SHA-384, SHA-512, SHA-1, and MD5.
-
-```typescript
-import { hash, hashAsync, hmac, hmacAsync, verifyHmac } from "@kjangid/security-tools/hash";
-
-// Synchronous SHA-256 hash (hex, base64, base64url, or binary)
-const digest = hash("secret data", "SHA-256", "hex");
-
-// Asynchronous Web Crypto API digest
-const asyncDigest = await hashAsync("secret data", "SHA-256", "base64url");
-
-// Synchronous HMAC-SHA256
-const mac = hmac("secret-key", "data payload", "SHA-256", "hex");
-
-// Constant-time HMAC verification
-const isValid = verifyHmac("secret-key", "data payload", mac as string);
-```
-
-### 3. Token Generator
-
-High-entropy, cryptographically secure random token generation.
-
 ```typescript
 import {
-  generateToken,
-  generateAlphanumericToken,
-  generateNumericToken,
-  generateHexToken,
-  generateBase64UrlToken,
-  generateUuid,
-  generateNanoId,
-  generateCustomToken,
-} from "@kjangid/security-tools/token-generator";
-
-const alpha = generateAlphanumericToken(32); // 32 chars [A-Za-z0-9]
-const otp = generateNumericToken(6); // 6-digit PIN e.g. "829410"
-const uuid = generateUuid(); // RFC 4122 v4 UUID
-const nid = generateNanoId(21); // 21-char URL-safe NanoID
-const hex = generateHexToken(16); // 32-char hex token (16 bytes)
-const custom = generateCustomToken(10, "ABCDEF012345");
-```
-
-### 4. API Key Generator
-
-Generates high-entropy prefixed keys with offline CRC32 integrity checksums and secure masking.
-
-```typescript
-import { generateApiKey, verifyApiKey, parseApiKey, maskApiKey } from "@kjangid/security-tools/api-key-generator";
-
-// 1. Generate key: <prefix>_<secret>_<checksum>
-const { key, prefix, secret, checksum } = generateApiKey({
-  prefix: "sk_live",
-  byteLength: 24,
-});
-// Result: 'sk_live_xY7..._c8a41f'
-
-// 2. Offline verification without hitting the database
-const verification = verifyApiKey(key, { prefix: "sk_live" });
-if (verification.valid) {
-  console.log("Key is structurally valid and untampered!");
-}
-
-// 3. Mask for audit logs and UI
-console.log(maskApiKey(key)); // 'sk_live••••••••a41f'
-```
-
-### 5. Secret Generator
-
-Generates high-entropy configuration secrets and Diceware passphrases from a curated 2048-word EFF list.
-
-```typescript
-import { generateSecret, generatePassphrase, estimateSecretEntropy } from "@kjangid/security-tools/secret-generator";
-
-// Raw 256-bit secret (hex, base64, base64url, or binary)
-const sec = generateSecret({ bits: 256, format: "hex" });
-
-// 6-word Diceware Passphrase (66 bits entropy)
-const pass = generatePassphrase({
-  words: 6,
-  separator: "-",
-  capitalize: true,
-  includeNumber: true,
-});
-// Result: 'Anxiety-Exact-Federal-Cupboard-Tortoise-Kitten-42'
-
-// Shannon entropy estimation
-const entropy = estimateSecretEntropy(sec.secret);
-console.log(entropy); // { bits: 256, strength: 'very_high' }
-```
-
-### 6. Crypto Utils
-
-Safe wrappers around platform-native crypto primitives.
-
-```typescript
-import {
-  getRandomBytes,
-  randomInt,
-  randomFloat,
-  randomChoice,
-  shuffle,
-  crc32,
-  crc32Hex,
-  timingSafeEqual,
-} from "@kjangid/security-tools/crypto-utils";
-
-// Unbiased cryptographically random integer in [min, max] (no modulo bias)
-const diceRoll = randomInt(1, 6);
-
-// Cryptographically secure uniform float in [0, 1) with 53-bit precision
-const float = randomFloat();
-
-// Cryptographic Fisher-Yates shuffle
-const shuffled = shuffle(["A", "B", "C", "D"]);
-
-// Constant-time comparison (prevents timing side-channel attacks)
-const equal = timingSafeEqual(secretA, secretB);
-```
-
-### 7. Signed Links
-
-Tamper-proof URLs and magic links with HMAC-SHA256 signatures, expiration timestamps, and clock skew tolerance.
-
-```typescript
-import {
+  analyzePassword,
+  generateApiKey,
+  verifyApiKey,
   generateSignedLink,
-  verifySignedLink,
-  createPasswordResetLink,
-  createMagicLink,
-} from "@kjangid/security-tools/link";
+  verifySignedLink
+} from '@kjangid/security-tools';
 
-// Generate signed link with 15-minute expiration
+// 1. Password Strength Analysis (Shannon entropy + crack times)
+const password = analyzePassword('CorrectHorseBatteryStaple!2026', { minScore: 3 });
+console.log(password.scoreLabel); // 'very_strong'
+console.log(password.crackTimes.offlineSlowHash); // 'centuries'
+
+// 2. Prefixed API Keys with Offline CRC32 Checksums
+const { key } = generateApiKey({ prefix: 'sk_live', byteLength: 24 });
+console.log(key); // 'sk_live_A8x..._d577b43b'
+console.log(verifyApiKey(key, { prefix: 'sk_live' }).valid); // true (verified without DB call)
+
+// 3. Tamper-Proof Signed URLs with Expiration
 const link = generateSignedLink({
-  baseUrl: "https://app.com/auth/verify",
-  secret: "app-signing-secret",
-  expiresIn: "15m",
-  params: { userId: "usr_123", role: "admin" },
+  baseUrl: 'https://api.example.com/verify',
+  secret: 'org-signing-key',
+  expiresIn: '15m',
+  params: { userId: 'usr_42' }
 });
 
-// Verify link
-const result = verifySignedLink(link.url, "app-signing-secret");
-if (result.valid) {
-  console.log("User ID:", result.params.userId);
-} else if (result.expired) {
-  console.log("Link expired at:", result.expiresAt);
-} else if (result.tampered) {
-  console.log("Link signature or query parameter was tampered with!");
-}
+const { valid, params } = verifySignedLink(link.url, 'org-signing-key');
+console.log(valid, params.userId); // true 'usr_42'
+```
+
+### Tree-Shaking Subpaths
+
+To minimize bundle size in frontend applications, import directly from modular subpaths:
+
+```typescript
+import { analyzePassword } from '@kjangid/security-tools/password-strength';
+import { hash, hmac, verifyHmac } from '@kjangid/security-tools/hash';
+import { generateUuid, generateNumericToken } from '@kjangid/security-tools/token-generator';
+import { generateApiKey, maskApiKey } from '@kjangid/security-tools/api-key-generator';
+import { generateSecret, generatePassphrase } from '@kjangid/security-tools/secret-generator';
+import { generateSignedLink, verifySignedLink } from '@kjangid/security-tools/link';
+import { timingSafeEqual, randomInt } from '@kjangid/security-tools/crypto-utils';
 ```
 
 ---
 
-## Standalone CLI Guide
+## Core Utilities Matrix
 
-The toolkit provides a unified binary (`crypto-tools` or `crypto-security-tools`) and dedicated binary aliases:
+| Module | Subpath Import | What It Does | CLI Command |
+| :--- | :--- | :--- | :--- |
+| **Password Strength** | `@kjangid/security-tools/password-strength` | Entropy calculation, pattern detection, blacklist, crack times | `password-strength` |
+| **Cryptographic Hash** | `@kjangid/security-tools/hash` | SHA-256/384/512, SHA-1, MD5, and HMAC digests (sync & async) | `hash-util` |
+| **Token Generator** | `@kjangid/security-tools/token-generator` | Hex, Base64URL, Alphanumeric, OTP PINs, UUID v4, and NanoID | `token-gen` |
+| **API Key Generator** | `@kjangid/security-tools/api-key-generator` | Prefixed keys with embedded CRC32 integrity checksums & masking | `api-key-gen` |
+| **Secret Generator** | `@kjangid/security-tools/secret-generator` | High-entropy raw secrets & 2048-word Diceware passphrases | `secret-gen` |
+| **Crypto Utils** | `@kjangid/security-tools/crypto-utils` | Unbiased integers, Fisher-Yates shuffle, constant-time compare | `crypto-tools` |
+| **Signed Links** | `@kjangid/security-tools/link` | HMAC-signed URLs, tamper detection, expiration & clock tolerance | `link-signer` |
 
-| Alias               | Command Equivalent               |
-| :------------------ | :------------------------------- |
-| `password-strength` | `crypto-tools password-strength` |
-| `hash-util`         | `crypto-tools hash`              |
-| `token-gen`         | `crypto-tools token`             |
-| `api-key-gen`       | `crypto-tools api-key`           |
-| `secret-gen`        | `crypto-tools secret`            |
-| `link-signer`       | `crypto-tools link`              |
+---
 
-### CLI Commands & Examples
+## CLI Usage
+
+The toolkit exposes a unified command `crypto-tools` (or `crypto-security-tools`) along with direct aliases for every module:
 
 ```bash
-# Version (evaluated first)
+# Check version or show help
 crypto-tools --version
-crypto-tools -v
+crypto-tools --help
 
-# Password strength analysis
-crypto-tools password-strength "MyP@ssw0rd!2026"
-crypto-tools password-strength "weak" --json
+# Password strength analysis (supports JSON output)
+password-strength "MyP@ssw0rd!2026"
+password-strength "test1234" --json
 
-# Standard input piping
-echo "my secret" | crypto-tools hash --algo sha256
+# Pipe data from standard input to hash
+echo "payload data" | hash-util --algo sha256
 
-# Token generation
-crypto-tools token --type alphanumeric --length 32
-crypto-tools token --type uuid
-crypto-tools token --type numeric --length 6
+# Generate tokens & keys
+token-gen --type alphanumeric --length 32
+token-gen --type uuid
+api-key-gen --prefix sk_live
 
-# API Key generation, verification & masking
-crypto-tools api-key --prefix sk_live
-crypto-tools api-key --verify "sk_live_xK9..._c8a41f"
-crypto-tools api-key --mask "sk_live_1234567890abcdef_12345678"
+# Generate Diceware passphrases & high-entropy secrets
+secret-gen --passphrase --words 6
+secret-gen --bits 256 --format hex
 
-# Secret & Passphrase generation
-crypto-tools secret --bits 256 --format hex
-crypto-tools secret --passphrase --words 6 --separator "-"
-
-# Signed Links
-crypto-tools link --url "https://app.com/reset" --secret "key123" --expires 15m
-crypto-tools link --verify "https://app.com/reset?token=...&exp=...&sig=..." --secret "key123"
+# Sign and verify URLs
+link-signer --url "https://app.com/reset" --secret "my-secret" --expires 30m
 ```
-
-### Exit Codes
-
-| Exit Code | Meaning            | Example Scenario                                                     |
-| :-------- | :----------------- | :------------------------------------------------------------------- |
-| **`0`**   | Success            | Operation succeeded, password met strength criteria, link verified   |
-| **`1`**   | Validation Failure | Password score below minimum threshold, link expired or tampered     |
-| **`2`**   | CLI Usage Error    | Missing required options, unrecognized command, malformed parameters |
 
 ---
 
-## Release Process & npm Trusted Publishing
+## Security & Operational Boundaries
 
-This package uses **npm Trusted Publishing (OIDC)** with **GitHub Actions** for completely free, token-less releases and cryptographic build provenance. Never edit the version string in `package.json` manually.
-
-### Automated Release Flow
-
-```
-npm version patch|minor|major
-           ↓
-git push --follow-tags
-           ↓
-GitHub Tag vX.Y.Z
-           ↓
-GitHub Actions (.github/workflows/release.yml)
-           ↓
-lint → test → build → verify tag version
-           ↓
-npm publish via OIDC (Provenance enabled, no secrets)
-           ↓
-GitHub Release (Automated release notes)
-```
-
-1. **Bump Version Locally**:
-   Run one of the following commands to update `package.json` and automatically generate a version commit and Git tag:
-
-   ```bash
-   npm version patch   # 1.0.0 -> 1.0.1 (bug fixes)
-   npm version minor   # 1.0.0 -> 1.1.0 (backward-compatible features)
-   npm version major   # 1.0.0 -> 2.0.0 (breaking changes)
-   ```
-
-2. **Push Commit and Tag**:
-
-   ```bash
-   git push --follow-tags
-   ```
-
-3. **Automated CI/CD Execution**:
-   - The push of the `v*` tag triggers [`.github/workflows/release.yml`](.github/workflows/release.yml).
-   - The workflow checks out the tagged commit, runs `npm ci`, lints, tests, and builds artifacts.
-   - It verifies that the Git tag strictly matches the `package.json` version.
-   - It publishes the package to npm using **OIDC Trusted Publishing** (with cryptographic provenance).
-   - It creates a GitHub Release with auto-generated release notes.
-
-### One-Time Setup: npm Trusted Publishing
-
-To enable token-less publishing from GitHub Actions to npm:
-
-1. Log in to [npmjs.com](https://www.npmjs.com).
-2. Navigate to your package settings (or **Account Settings** ➔ **Publishing Access** for a new package).
-3. Click **Add a Trusted Publisher** and choose **GitHub Actions**.
-4. Configure the publisher:
-   - **Organization or User**: `kajangid`
-   - **Repository**: `SecurityAndCryptoHelperTools`
-   - **Workflow filename**: `release.yml`
-   - **Environment name**: _(leave empty)_
-   - **Package Name**: `@kjangid/security-tools`
-5. Save the configuration. No `NPM_TOKEN` secret is required!
+- **Secure Randomness**: Requires `globalThis.crypto.getRandomValues`. If unavailable, execution errors out immediately rather than falling back to insecure `Math.random()`.
+- **Storage Password Hashing**: `password-strength` scores passwords prior to acceptance; it is **not** a storage hasher. Use Argon2id or bcrypt for database password storage.
+- **Legacy Hashes**: MD5 and SHA-1 are included strictly for legacy checksum interop. Never use MD5/SHA-1 for signatures or credentials.
 
 ---
 
-## Automated Scripts
+## Documentation
 
-| Script                   | Command                      | Purpose                                                          |
-| :----------------------- | :--------------------------- | :--------------------------------------------------------------- |
-| `npm run build`          | `tsup`                       | Compiles dual ESM (`.mjs`), CJS (`.cjs`), and DTS bundles        |
-| `npm test`               | `vitest run`                 | Runs all 12 test suites across the matrix                        |
-| `npm run test:watch`     | `vitest`                     | Runs Vitest in watch mode                                        |
-| `npm run test:coverage`  | `vitest run --coverage`      | Generates V8 statement, branch, and function coverage report     |
-| `npm run lint`           | `tsc --noEmit`               | Strict TypeScript compiler lint validation                       |
-| `npm run typecheck`      | `tsc --noEmit`               | Strict TypeScript type checking                                  |
-| `npm run bump:patch`     | `npm version patch`          | Increments patch version (creates commit & Git tag)              |
-| `npm run bump:minor`     | `npm version minor`          | Increments minor version (creates commit & Git tag)              |
-| `npm run bump:major`     | `npm version major`          | Increments major version (creates commit & Git tag)              |
-| `npm run prepublishOnly` | `typecheck && test && build` | Validates types, runs tests, and builds artifacts before publish |
-| `npm run publish:dry`    | `npm publish --dry-run`      | Verifies clean packaging without publishing                      |
-
----
-
-## Documentation Suite
-
-Detailed architecture and deployment specifications are located in [`docs/`](./docs):
-
-- [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) - System architecture, directory layout, and version flow.
-- [`docs/INSTALLATION.md`](./docs/INSTALLATION.md) - Package manager setups, bundler configs, and global CLI.
-- [`docs/FEATURES.md`](./docs/FEATURES.md) - Exhaustive API signatures, options interfaces, and CLI reference.
-- [`docs/LIMITATIONS.md`](./docs/LIMITATIONS.md) - Operational limits, entropy boundaries, and security considerations.
-- [`docs/TESTING.md`](./docs/TESTING.md) - Test breakdown matrix and attack vector test cases.
-- [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) - Publishing pipeline, version bumping, and CI/CD workflow.
+- [Complete API Reference & Signatures](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/docs/FEATURES.md)
+- [Architecture & Design Decisions](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/docs/ARCHITECTURE.md)
+- [Installation & Bundler Setup](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/docs/INSTALLATION.md)
+- [Security Limitations & Boundaries](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/docs/LIMITATIONS.md)
+- [Test Strategy & Coverage Matrix](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/docs/TESTING.md)
+- [CI/CD & Deployment Guide](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/docs/DEPLOYMENT.md)
+- [Developer Contributing Guide](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/CONTRIBUTING.md)
 
 ---
 
 ## License
 
-MIT © [Karan Jangid](LICENSE)
+MIT © [Karan Jangid](https://github.com/kajangid/SecurityAndCryptoHelperTools/blob/master/LICENSE)
